@@ -1,0 +1,660 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>20.10.20 SQL 강의Day 1
+</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f067a38f-ec73-4b9a-8284-d6aba1d7e2af" class="page mono"><header><h1 class="page-title">20.10.20 SQL 강의Day 1
+</h1></header><div class="page-body"><h1 id="3a4b248c-460d-477d-8992-ee25f6059877" class=""><strong>PART 1「입문」 SQL 첫발 내딛기</strong></h1><p id="9abdca5d-f50b-4d71-b65f-6d466247d5a8" class="">오라클 = Database software</p><p id="169a8967-8cc4-4885-885c-bfb2457638dc" class="">(오라클은 DB분야 세계 점유 80%의 대기업명 이기도함. DB SW를 만든 회사이자 그 SW의 이름이 오라클)</p><p id="f4e813ab-79c6-4c46-9274-3b6cfd80440a" class="">
+</p><p id="17350559-be14-4719-9a27-592b39cdc152" class="">DB = data를 저장하고 관리하는 저장소를 말함</p><p id="e61b88c2-01ed-47e5-bb55-831cac22d18f" class="">오늘부터 한달 간 배울 것 = SQL</p><p id="35bb3658-15ba-4fbd-a497-4d02055bdf4b" class="">
+</p><p id="8eea44cc-e2cd-4dd4-9c9b-89dab21c3da8" class="">(SQL커리큘럼 :</p><p id="09403371-0f71-412a-93a7-4a8a6481b6cd" class=""><a href="http://cafe.daum.net/_c21_/bbs_read?grpid=zchT&amp;fldid=SfFj&amp;contentval=00003zzzzzzzzzzzzzzzzzzzzzzzzz&amp;datanum=3&amp;page=1&amp;prev_page=0&amp;firstbbsdepth=&amp;lastbbsdepth=zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz&amp;listnum=20#none">http://cafe.daum.net/oracleoracle/SfFj/3?svc=cafeapi</a></p><p id="5cd2a238-69e9-40f7-ae7a-6f4a8dc36088" class="">출처: &lt;<a href="http://cafe.daum.net/_c21_/bbs_read?grpid=zchT&amp;fldid=SfFj&amp;contentval=00003zzzzzzzzzzzzzzzzzzzzzzzzz&amp;datanum=3&amp;page=1&amp;prev_page=0&amp;firstbbsdepth=&amp;lastbbsdepth=zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz&amp;listnum=20">http://cafe.daum.net/_c21_/bbs_read?grpid=zchT&amp;fldid=SfFj&amp;contentval=00003zzzzzzzzzzzzzzzzzzzzzzzzz&amp;datanum=3&amp;page=1&amp;prev_page=0&amp;firstbbsdepth=&amp;lastbbsdepth=zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz&amp;listnum=20</a>&gt; )</p><p id="24cb1a4b-97f0-448f-a74c-b9676322fccf" class="">
+</p><p id="19a9807b-50b4-4f87-97a9-f378d5803e65" class="">
+</p><ul id="87a1566b-2d5d-46c5-9e7e-2526beaa58d2" class="bulleted-list"><li>SQL = Structure Query Language (구조적 지리 언어)</li></ul><p id="809eab23-9d4b-4c85-b8a3-6da7bc442c88" class="">= 데이터를 검색하고 조작하는 언어</p><p id="940774e2-c8a3-4202-a613-1fc34c345d73" class="">
+</p><p id="db8584e9-a10c-41c2-a913-92f52ccec23d" class="">
+</p><p id="bc46c81f-d33d-4c41-8b4a-59657e9490ee" class="">SQL을 왜 배워야 하는가?</p><p id="bdac5979-f0a7-4503-b5e4-d1d754ab02b0" class="">데이터를 검색하고 다룰려면 무조건 알아야함.</p><p id="edcba50d-e882-4077-8358-a555a643b3aa" class="">
+</p><p id="65c943c9-738d-431e-8cd8-8bf12f07d431" class="">
+</p><p id="ec182611-f143-4563-81ad-4127c7a9b03d" class=""><strong>If 진로가 Data Analyst / Data developer, 많은</strong> <strong>업무에서 SQL이</strong> <strong>많이</strong> <strong>사용됨. So, 반드시 SQL을</strong> <strong>배워야함.</strong></p><p id="f343213d-f8f8-405c-a9ed-4ad296a2d5a7" class="">
+</p><h2 id="db1f25eb-5723-4851-8f7e-0e3eeceace9a" class=""><strong>*SQL</strong><strong>의</strong> <strong>종류</strong><strong> (</strong><strong>총</strong><strong> 5</strong><strong>가지</strong><strong>)</strong></h2><p id="1468d734-226e-47d9-9978-5eb1bc8ba6a5" class="">1<strong>. Query (데이터를 검색하는 언어)</strong></p><ul id="61723de6-83c6-45f1-bd53-f44902cc3c9d" class="bulleted-list"><li>&gt; select 문의 6가지 절(이 있음). 그것을 Query 에서 배움</li></ul><p id="1fb2124f-c23b-4be6-99b8-7230e7481c6e" class="">2. <strong>DML 문 (Data Manipulation Language , 데이터 조작 언어)</strong><div class="indented"><ol id="407e897f-45d2-40cb-8b43-f60d498b7035" class="numbered-list" start="1"><li>&#x27;insert&#x27; = 데이터 입력 언어</li></ol><ol id="6df5c19c-ac6b-4333-b2e1-2dea33f9d012" class="numbered-list" start="2"><li>&#x27;update&#x27; = 데이터 수정 언어</li></ol><ol id="d43de181-c792-4565-aab7-e266bf790d7d" class="numbered-list" start="3"><li>&#x27;delete&#x27; = 데이터 삭제 언어</li></ol><ol id="55a1facf-b681-48a6-97c3-ab0f5de1f11c" class="numbered-list" start="4"><li>&#x27;merge&#x27; = 데이터 입력, 수정, 삭제를 한번에 수행하는 명령어</li></ol></div></p><p id="ef602caf-6597-4021-9dcb-bf096911731f" class="">3<strong>. DDL 문 (Data Definition Language, 데이터 정의어)</strong><div class="indented"><ol id="725360fc-6781-4abc-bf1b-a445a9f5d577" class="numbered-list" start="1"><li>&#x27;create&#x27; = 생성</li></ol><ol id="25b9381c-b1ef-4333-bd9a-17d02a38c949" class="numbered-list" start="2"><li>&#x27;alter&#x27; = 수정</li></ol><ol id="db04a7b7-b9e9-4e3a-bbe3-182f1b9d41df" class="numbered-list" start="3"><li>&#x27;drop&#x27; = 삭제</li></ol><ol id="2985048f-fdaf-43d6-af60-fdbe1bf512e1" class="numbered-list" start="4"><li>&#x27;truncate&#x27; = 삭제</li></ol><ol id="ae454115-f8b9-4106-b8f3-473c880fd8c9" class="numbered-list" start="5"><li>&#x27;rename&#x27; = 이름변경</li></ol></div></p><p id="2c486f6b-b8d0-487c-a657-d69ebff29a2f" class="">4<strong>. DCL 문 (Data Control Language, )</strong><div class="indented"><ol id="429fa102-584c-4143-b765-68f08d543986" class="numbered-list" start="1"><li>&#x27;grant&#x27; = 데이터를 접근 할 수 있는 권한을 부여하는 것</li></ol><ol id="32713e8c-6359-4604-997f-3451559bac10" class="numbered-list" start="2"><li>&#x27;revoke&#x27; = 데이터를 접근 할 수 있는 권한을 취소하는 것 (뺏는것)</li></ol></div></p><p id="98aa38bd-de5b-4ffd-a95c-ab3e5bf1ca7c" class="">5<strong>. TCL 문 (Transaction Control Language, )</strong><div class="indented"><ol id="cc57479c-ee8c-4ead-83ed-a7b569263ea0" class="numbered-list" start="1"><li>&#x27;commit&#x27; = 현재의 데이터의 상태를 DB에 &#x27;영구히&#x27; 저장하겠다. (는 뜻)</li></ol><ol id="87e4919d-a25c-406e-90e1-e718d9ecd4e2" class="numbered-list" start="2"><li>&#x27;rollback&#x27; = 지금까지 했던 작업을 다 &#x27;취소&#x27; 하겠다. (는 뜻)</li></ol><ol id="1f88076f-b998-4408-867a-de373eece543" class="numbered-list" start="3"><li>&#x27;savepoint&#x27; = 특정시점까지 &#x27;rollback&#x27; 하는 기능</li></ol><p id="3a684d0f-081d-4154-a44c-2dc32188dfac" class="">
+</p></div></p><p id="f3a6c0a8-9ab1-46d4-9bf1-2abdd351a7b2" class=""><mark class="highlight-gray_background">&#x27;핵심&#x27;은 내가 보고 싶은 데이터를 정확하게 검색해서 보는 &#x27;기술&#x27;을 배우는 것. = SQL</mark></p><p id="aaa735dd-1ade-4785-93fc-9ccaddcddcd3" class="">
+</p><ul id="eca4619b-9f75-4503-8863-47802c2afe5b" class="bulleted-list"><li>SQL만 다루는 롤의 직무만 있는 경우도 있음.</li></ul><p id="189e2029-94ad-455c-9ec3-8fb642b49b96" class="">우리가 쓸 버전은 Oracle database 19c ( c = cloud)</p><p id="fc9a6c9b-a54d-49e9-ac94-d4505a1a09fd" class="">Oracl database = 데이터 저장소</p><p id="467cf26f-4fa3-43fa-b9ec-c64809a80ddf" class="">19c 에는 인공지능의 한부분인 머신러닝* 기능이 내장되어 있음.</p><p id="8cfa3b30-5e4f-4e09-8468-261487c2aaac" class="">머신러닝 = 컴퓨터가 스스로 학습하여 공부하는 기능. (일종의 A.I)</p><p id="73e6f7d8-bbf0-4536-8dfc-cb23031840f5" class="">
+</p><p id="f459d88d-b0e0-4993-8d98-b2794c219a4e" class="">DS에서 머신러닝을 응용하는 방법?</p><p id="9a7b7039-41f2-48d3-931c-75d1f8f4c41e" class="">예시) 위스콘신 대학에서 유방암 데이터 (정상 / 악성) 을 활용해 유방함 유무를 체크하는 식으로 머신러닝 학습을 활용함.</p><p id="fe2e29fa-04f3-4f24-b290-4ac3b5cf77ba" class="">다양한 알고리즘 문제를 SQL로 풀 수 있음. (11기 게시판에 보면 예시 많음)</p><p id="32a979c0-af49-4f12-a714-920f52f1a000" class="">
+</p><p id="248e0888-34b8-4c5e-8329-46d1e9256ed3" class="">&lt;Oracle 설치방법&gt;</p><p id="32f2ea34-7671-422a-a72e-002c9f0379f8" class="">기본적으로는 스샷을 참조</p><p id="e21fe357-0843-4d1c-af15-fdc181c75dbe" class="">특이사항</p><p id="80c1c801-036a-4e49-a700-dbedeaf1f2bc" class="">Oracle 2가 아닌 oracle3 폴더를 새로 만들고 그 폴더에 설치해야함.</p><p id="6510bb28-4819-49cd-a05a-fdf0f0133674" class="">&#x27;컨테이너 데이터베이스로 생성&#x27; 을 체크해제</p><p id="8de2d593-a208-4ab4-9c8c-37e13fe4d1ed" class="">같은페이지 비번 : oracle_4U</p><p id="87a638b3-ca8a-4b12-bda2-f0e362c428a5" class="">설치후! 본격 수업</p><p id="04271a84-9b6b-48fa-9dda-bfb8385ddf86" class="">
+</p><ol id="7151c906-9d64-4b64-a0f4-e0519b0043dd" class="numbered-list" start="1"><li>오라클 열기</li></ol><ol id="d45f713f-e276-4ac0-b422-b4f6640b218d" class="numbered-list" start="2"><li>도스창을 연다 (윈도우+r -&gt; cmd + enter)</li></ol><ol id="83755578-4f1c-473f-bdce-06e8ebe7e604" class="numbered-list" start="3"><li>명령어 -&gt; sqlplus &quot;/as sysdba&quot; 하면 오라클이 열림!</li></ol><ol id="12fa0d51-bad5-4826-8830-e6af35cee14a" class="numbered-list" start="4"><li>show user 입력 -&gt; USER은 &quot;SYS&quot;입니다 라고 뜸.</li></ol><p id="784567b5-94c7-4d2c-8f7c-4ee390f575d8" class="">&#x27;SYS&#x27;는 오라클의 &#x27;최고 권한자&#x27; 를 말함.</p><p id="311d6c70-6824-4cad-bdcb-1ddace8c3215" class="">
+</p><p id="03b395e8-6654-4b00-8ca5-850464284123" class=""><strong>본격</strong> <strong>수업</strong> <strong>시작</strong><strong>!</strong></p><p id="edc56914-1d81-4429-8ba0-655024af7c5b" class=""><strong>001 테이블에서 특정 열(COLUMN) 선택하기</strong></p><p id="8cd9006b-4051-4390-99fd-a93f2ccbefcc" class=""><strong>1. </strong><strong>데이터</strong><strong> </strong><strong>만들기</strong><div class="indented"><ol id="cdc3ba89-b671-47fb-b5af-098b864bd2a6" class="numbered-list" start="1"><li>카페로 간다.</li></ol><ol id="484a8cd9-5d53-4354-894b-aab2b29bc03a" class="numbered-list" start="2"><li>오라클 실습 데이터 스크립트 게시글로 들어간다.</li></ol><ol id="32f9e534-9911-44c8-906c-fa28741a4fbc" class="numbered-list" start="3"><li>명령어들을 복사한다.</li></ol><ol id="c1bbd6f2-db78-4d45-a2ef-1ed587ac3cca" class="numbered-list" start="4"><li>도스창으로 간다.</li></ol><ol id="c0b0e3b3-412f-438d-9a04-13829913bcef" class="numbered-list" start="5"><li>커서에서 우클릭! (자동입력됨) -&gt; 짜잔~!</li></ol><ol id="4d4a54de-3727-46a0-b71c-45328cc03650" class="numbered-list" start="6"><li>이작업은 오늘만 하면 되는 것</li></ol></div></p><p id="c59b9ecc-177c-4cbe-b9db-f60d14f64951" class="">
+</p><p id="d73afac6-bdf9-4528-ac6b-156fcfd02565" class=""><strong>2. 데이터 검색하기</strong></p><p id="8ff43551-f24f-49df-a22d-5219f2ec5d8a" class="">명령어 : select ename, sal from emp; 라고 입력 + 엔터</p><p id="1236fcb5-eee6-4522-a3ee-b8e418af96ee" class="">명령어 해석</p><p id="3d97fe3d-3830-4579-9dbf-2ad75fc9e5e2" class="">&#x27;select&#x27; = 검색 / 조회 해라</p><p id="cb59b71e-5060-434a-8f22-9668db5be579" class="">&#x27;ename&#x27; = 이름 하고</p><p id="db34bd8e-bada-46f4-a121-ee95132f23b9" class="">&#x27;sal&#x27; = 월급을</p><p id="e08804cb-335c-43ff-af3c-34e3280830b4" class="">&#x27;from&#x27; =무엇으로 부터?</p><p id="c70aa7e0-3f01-473c-a7a8-4225977c5387" class="">&#x27;emp&#x27; = emp라는 table 로 부터</p><p id="32f4456b-44b1-4579-90dd-69f6a8f36581" class="">&#x27; ; &#x27; (세미 콜론) = 세미콜론 앞에 있는 (SQL) 문장 &#x27;실행해라&#x27; 라는 뜻(명령어)</p><p id="1cbce028-731e-4089-a5a7-9bd262255c0f" class="">So, emp라는 table로부터 이름과 월급을 검색해라 라는 말!</p><p id="d1e62c7c-2970-4246-9d6e-d8957e43ad6b" class="">
+</p><p id="7bd49ecb-f6fc-4bc0-805b-055fec2d6ff8" class=""><strong>3. emp table 의 컬럼들 (수업위해 필요한 정보)</strong></p><p id="30e82fcd-d905-4c06-aaea-9dc934eaca58" class="">empno : 사원번호</p><p id="b0d78d85-73de-4691-83eb-421771cd2c50" class="">ename : 사원이름</p><p id="b649aa0a-754d-4c5a-8b3d-b5ee2a6315dc" class="">sal : 월급</p><p id="6ce525c6-989a-4b0e-9b10-f3c33c1c8cc4" class="">job : 직업</p><p id="1ffa656d-49c0-4c62-a1a6-f870153279d8" class="">comm : 커미션</p><p id="cd132617-f1ac-426a-8253-9f6751bbac05" class="">mgr : 관리자 번호</p><p id="62e23c5d-e15b-4f52-97ac-f48f0cf126a9" class="">hiredate : 입사일</p><p id="e648ae48-7b55-4f0b-8c70-fb1f35fb8676" class="">deptno : 부서번호</p><p id="305cbdda-30a0-4ae0-94ad-35118c738c3f" class="">
+</p><p id="124e0a5f-7608-4731-9869-042666c08cb8" class="">오늘의 마무리!</p><p id="d81a5d8f-db4b-4094-967e-3c10fd1bd52f" class="">
+</p><p id="aec670a4-12a5-4f23-9137-6206836b60cd" class="">문제 1.  이름과 월급과 직업을 출력하시오</p><p id="d54052f2-d484-4fcc-b6b0-c91c5bbaf57a" class="">나의 생각 select ename, sal, job from emp; (맞음)</p><pre id="93f42987-be6f-4af8-ad96-998d6d8fc20c" class="code"><code>나의 생각 select ename, sal, job from emp; (맞음)</code></pre><p id="338b5849-9cf2-4e71-a9d9-50b58c855b76" class="">
+</p><p id="b1cc15b7-c2e0-447a-af5d-d708e67fbf61" class="">문제 2. 이름과 입사일과 부서번호를 출력하시오</p><p id="a8f5f57c-7821-4a70-acb3-5b1094eb98bc" class="">나의 생각 : select ename, hiredate, deptno from emp; (맞음)</p><pre id="cc650ba6-ee58-4506-9d03-20a98f9b6f58" class="code"><code>select ename, hiredate, deptno from emp;</code></pre><p id="014ca922-e3d8-4cb1-96b5-a5578a3c028c" class="">
+</p><p id="87570073-2cd7-445f-bba3-f8f73465b44f" class="">
+</p></div></article></body></html>
