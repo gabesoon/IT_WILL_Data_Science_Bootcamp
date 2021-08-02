@@ -260,4 +260,4 @@
 
 ---
 
-# Reference : [데이터 증가와 기계학습](https://cafe.daum.net/oracleoracle)
+## Reference : [데이터 증가와 기계학습](https://cafe.daum.net/oracleoracle)
